@@ -81,12 +81,12 @@ if audio is not None:
     st.subheader("Audio Waveform")
 
     fig, ax = plt.subplots()
-    ax.plot(audio_data)
+    ax.plot(y)
     ax.set_title("Audio Waveform")
     ax.set_xlabel("Time")
     ax.set_ylabel("Amplitude")
-    st.pyplot(fig)
 
+    st.pyplot(fig)
     # -------- Spectrogram --------
 
     st.subheader("Mel Spectrogram")
