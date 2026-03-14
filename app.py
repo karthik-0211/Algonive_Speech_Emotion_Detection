@@ -5,7 +5,6 @@ import librosa.display
 import matplotlib.pyplot as plt
 import numpy as np
 import soundfile as sf
-import sounddevice as sd
 
 st.set_page_config(page_title="Speech Emotion Recognition AI", layout="wide")
 
