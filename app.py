@@ -80,14 +80,11 @@ if audio is not None:
 
     st.subheader("Audio Waveform")
 
-    audio_data, sr = librosa.load("temp.wav")
-
     fig, ax = plt.subplots()
-
-    librosa.display.waveshow(audio_data, sr=sr)
-
-    ax.set_title("Waveform")
-
+    ax.plot(audio_data)
+    ax.set_title("Audio Waveform")
+    ax.set_xlabel("Time")
+    ax.set_ylabel("Amplitude")
     st.pyplot(fig)
 
     # -------- Spectrogram --------
