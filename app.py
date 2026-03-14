@@ -5,6 +5,7 @@ import librosa.display
 import matplotlib.pyplot as plt
 import numpy as np
 import soundfile as sf
+import sounddevice as sd
 
 st.set_page_config(page_title="Speech Emotion Recognition AI", layout="wide")
 
@@ -76,6 +77,10 @@ if audio is not None:
 
     st.write("Confidence:", round(conf * 100, 2), "%")
 
+    # -------- Load Audio --------
+
+    y, sr = librosa.load("temp.wav", sr=22050)
+
     # -------- Waveform --------
 
     st.subheader("Audio Waveform")
@@ -87,11 +92,12 @@ if audio is not None:
     ax.set_ylabel("Amplitude")
 
     st.pyplot(fig)
+
     # -------- Spectrogram --------
 
     st.subheader("Mel Spectrogram")
 
-    mel = librosa.feature.melspectrogram(y=audio_data, sr=sr)
+    mel = librosa.feature.melspectrogram(y=y, sr=sr)
 
     mel_db = librosa.power_to_db(mel, ref=np.max)
 
