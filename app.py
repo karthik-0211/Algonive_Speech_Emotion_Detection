@@ -24,43 +24,30 @@ emotion_emojis = {
     "surprise": "😲"
 }
 
+# -------- Cache Prediction (Faster App) --------
+
+@st.cache_resource
+def load_model():
+    return predict_emotion
+
+predict = load_model()
+
 # -------- Upload Audio --------
 
 audio = st.file_uploader("Upload a .wav audio file", type=["wav"])
-
-# -------- Microphone Recording --------
-
-st.subheader("🎤 Or Record Voice")
-
-if st.button("Start Recording (3 sec)"):
-
-    duration = 3
-    samplerate = 22050
-
-    recording = sd.rec(int(duration * samplerate),
-                       samplerate=samplerate,
-                       channels=1)
-
-    sd.wait()
-
-    sf.write("temp.wav", recording, samplerate)
-
-    st.success("Recording completed!")
-
-    audio = "temp.wav"
 
 # -------- Prediction --------
 
 if audio is not None:
 
     # Save uploaded file
-    if type(audio) != str:
-        with open("temp.wav", "wb") as f:
-            f.write(audio.read())
+    with open("temp.wav", "wb") as f:
+        f.write(audio.read())
 
     st.audio("temp.wav")
 
-    emotion, conf = predict_emotion("temp.wav")
+    # Predict emotion
+    emotion, conf = predict("temp.wav")
 
     emoji = emotion_emojis.get(emotion, "")
 
@@ -117,7 +104,7 @@ if audio is not None:
 
 else:
 
-    st.info("Upload or record audio to detect emotion.")
+    st.info("Upload a .wav file to detect emotion.")
 
 st.divider()
 
